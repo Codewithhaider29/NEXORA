@@ -60,19 +60,24 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden pt-20 bg-[#050816]"
     >
-      {/* Full Background Video */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        <video
-          src="/hero-video.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-60"
-        />
-        {/* Gradient overlays to make text pop */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/80 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-[#050816]/40" />
+      {/* Right Side Background Video */}
+      <div className="absolute right-0 lg:right-[2%] top-1/2 -translate-y-1/2 w-full lg:w-[40%] z-0 pointer-events-none">
+        <div 
+          className="relative w-full aspect-video rounded-[2rem] overflow-hidden"
+          style={{
+            WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 30%)",
+            maskImage: "linear-gradient(to right, transparent 0%, black 30%)"
+          }}
+        >
+          <video
+            src="/hero-video.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-90 scale-95"
+          />
+        </div>
       </div>
 
       {/* Background elements */}
