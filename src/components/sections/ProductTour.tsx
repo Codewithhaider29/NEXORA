@@ -92,17 +92,17 @@ export default function ProductTour() {
   const activeTab = tabs.find((t) => t.id === active)!;
 
   return (
-    <section className="py-28 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16 sm:py-28 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
           <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-3 block">Product Tour</span>
-          <h2 className="text-4xl lg:text-5xl font-bold font-display text-white">See It in Action</h2>
-          <p className="text-slate-400 mt-4 max-w-xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white">See It in Action</h2>
+          <p className="text-slate-400 mt-4 max-w-xl mx-auto px-4 text-sm sm:text-base">
             Explore Nexora's powerful dashboard features through our interactive preview.
           </p>
         </motion.div>
@@ -115,38 +115,38 @@ export default function ProductTour() {
           style={{ boxShadow: "0 0 60px rgba(99,102,241,0.1)" }}
         >
           {/* Browser chrome */}
-          <div className="flex items-center gap-2 px-5 py-3.5 bg-white/[0.02] border-b border-white/[0.06]">
-            <div className="w-3 h-3 rounded-full bg-red-500/60" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-            <div className="w-3 h-3 rounded-full bg-green-500/60" />
-            <div className="flex-1 mx-4 px-4 py-1 bg-white/[0.04] rounded-lg text-xs text-slate-500 font-mono text-center">
+          <div className="flex items-center gap-2 px-4 sm:px-5 py-3 sm:py-3.5 bg-white/[0.02] border-b border-white/[0.06]">
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/60" />
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/60" />
+            <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/60" />
+            <div className="flex-1 mx-2 sm:mx-4 px-3 sm:px-4 py-1 bg-white/[0.04] rounded-lg text-[10px] sm:text-xs text-slate-500 font-mono text-center truncate">
               app.nexora.io/dashboard
             </div>
           </div>
 
           {/* Dashboard layout */}
-          <div className="flex">
+          <div className="flex flex-col md:flex-row">
             {/* Sidebar tabs */}
-            <div className="w-48 bg-black/20 border-r border-white/[0.05] p-3 space-y-1">
+            <div className="w-full md:w-48 bg-black/20 border-b md:border-b-0 md:border-r border-white/[0.05] p-2 sm:p-3 flex overflow-x-auto md:block space-x-2 md:space-x-0 md:space-y-1 custom-scrollbar">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActive(tab.id)}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-200 text-left ${
+                  className={`flex-shrink-0 md:w-full flex items-center gap-2 sm:gap-2.5 px-3 py-2 sm:py-2.5 rounded-lg text-xs font-medium transition-all duration-200 text-left ${
                     active === tab.id
                       ? "bg-gradient-to-r from-blue-600/20 to-violet-600/20 text-white border border-blue-500/20"
                       : "text-slate-500 hover:text-slate-300 hover:bg-white/[0.03]"
                   }`}
                 >
                   {tab.icon}
-                  {tab.label}
-                  {active === tab.id && <ChevronRight className="w-3 h-3 ml-auto" />}
+                  <span className="whitespace-nowrap">{tab.label}</span>
+                  {active === tab.id && <ChevronRight className="hidden md:block w-3 h-3 ml-auto" />}
                 </button>
               ))}
             </div>
 
             {/* Main content */}
-            <div className="flex-1 p-6">
+            <div className="flex-1 p-4 sm:p-6 min-w-0">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={active}
@@ -155,16 +155,16 @@ export default function ProductTour() {
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
                     <div>
-                      <div className="text-xs text-slate-500 mb-1">{activeTab.content.sublabel}</div>
-                      <div className="text-3xl font-bold font-display text-white">{activeTab.content.metric}</div>
+                      <div className="text-[10px] sm:text-xs text-slate-500 mb-1">{activeTab.content.sublabel}</div>
+                      <div className="text-2xl sm:text-3xl font-bold font-display text-white">{activeTab.content.metric}</div>
                     </div>
-                    <div className="text-sm font-semibold text-white">{activeTab.content.title}</div>
+                    <div className="text-xs sm:text-sm font-semibold text-white bg-white/[0.05] px-3 py-1 rounded-full w-fit">{activeTab.content.title}</div>
                   </div>
 
                   {/* Simulated chart bar */}
-                  <div className="h-28 flex items-end gap-1.5 mb-6">
+                  <div className="h-20 sm:h-28 flex items-end gap-1 sm:gap-1.5 mb-6">
                     {Array.from({ length: 20 }, (_, i) => {
                       const h = 20 + Math.random() * 80;
                       return (
@@ -187,12 +187,12 @@ export default function ProductTour() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.06 }}
-                        className="flex items-center gap-3 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.04] transition-colors"
+                        className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.04] transition-colors"
                       >
-                        <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
-                        <div className="text-xs text-slate-300 flex-1">{item.label}</div>
-                        <div className="text-xs font-bold text-white">{item.value}</div>
-                        <div className="text-xs text-green-400">{item.change}</div>
+                        <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
+                        <div className="text-xs text-slate-300 flex-1 min-w-[100px]">{item.label}</div>
+                        <div className="text-xs font-bold text-white w-1/4 sm:w-auto text-right sm:text-left">{item.value}</div>
+                        <div className="text-[10px] sm:text-xs text-green-400 w-1/4 sm:w-auto text-right">{item.change}</div>
                       </motion.div>
                     ))}
                   </div>

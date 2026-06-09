@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import LoadingScreen from "@/components/ui/LoadingScreen";
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import TrustedBy from "@/components/sections/TrustedBy";
@@ -28,11 +27,11 @@ import FAQ from "@/components/sections/FAQ";
 import Newsletter from "@/components/sections/Newsletter";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
+import ScrollToTop from "@/components/ui/ScrollToTop";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-[#050816] overflow-x-hidden">
-      <LoadingScreen />
       <Navbar />
       <Hero />
       <TrustedBy />
@@ -61,6 +60,7 @@ export default function Home() {
       <Newsletter />
       <CTA />
       <Footer />
+      <ScrollToTop />
     </main>
   );
 }

@@ -102,17 +102,17 @@ export default function AdvancedAnalytics() {
   };
 
   return (
-    <section className="py-28 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16 sm:py-28 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
           <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest mb-3 block">Advanced Analytics</span>
-          <h2 className="text-4xl lg:text-5xl font-bold font-display text-white">Data-Driven Decisions</h2>
-          <p className="text-slate-400 mt-4 max-w-xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white">Data-Driven Decisions</h2>
+          <p className="text-slate-400 mt-4 max-w-xl mx-auto px-4 text-sm sm:text-base">
             Interactive charts and deep analytics to understand your platform performance.
           </p>
         </motion.div>
@@ -121,15 +121,15 @@ export default function AdvancedAnalytics() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card p-6"
+          className="glass-card p-4 sm:p-6"
         >
           {/* Tabs */}
-          <div className="flex flex-wrap gap-2 mb-8 p-1 bg-white/[0.03] rounded-xl w-fit">
+          <div className="flex flex-wrap gap-2 mb-6 sm:mb-8 p-1 bg-white/[0.03] rounded-xl w-fit">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActive(tab.id)}
-                className={`relative px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`relative px-3 py-2 sm:px-5 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all duration-200 ${
                   active === tab.id ? "text-white" : "text-slate-500 hover:text-slate-300"
                 }`}
               >
@@ -154,10 +154,10 @@ export default function AdvancedAnalytics() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="mb-6 flex items-end gap-4"
+                  className="mb-6 flex flex-col sm:flex-row sm:items-end gap-1 sm:gap-4"
                 >
-                  <div className="text-4xl font-bold font-display text-white">{tab.value}</div>
-                  <div className="text-green-400 text-sm font-semibold mb-1.5">{tab.change} this month</div>
+                  <div className="text-3xl sm:text-4xl font-bold font-display text-white">{tab.value}</div>
+                  <div className="text-green-400 text-xs sm:text-sm font-semibold mb-1.5">{tab.change} this month</div>
                 </motion.div>
               ) : null
             )}
@@ -171,7 +171,7 @@ export default function AdvancedAnalytics() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="h-64"
+              className="h-56 sm:h-64 md:h-80 w-full"
             >
               {renderChart()}
             </motion.div>

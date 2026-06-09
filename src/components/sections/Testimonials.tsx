@@ -9,7 +9,8 @@ const testimonials = [
     name: "Alex Morgan",
     role: "CTO",
     company: "DeFi Protocol",
-    avatar: "AM",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80",
     color: "#3B82F6",
     rating: 5,
     quote:
@@ -19,7 +20,8 @@ const testimonials = [
     name: "Sarah Chen",
     role: "Founder",
     company: "NFT Marketplace",
-    avatar: "SC",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&h=150&q=80",
     color: "#8B5CF6",
     rating: 5,
     quote:
@@ -29,7 +31,8 @@ const testimonials = [
     name: "James Walker",
     role: "Lead Developer",
     company: "GameFi Studio",
-    avatar: "JW",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
     color: "#39FF14",
     rating: 5,
     quote:
@@ -39,12 +42,22 @@ const testimonials = [
     name: "Maria Santos",
     role: "VP Engineering",
     company: "Enterprise Bank",
-    avatar: "MS",
+    image:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
     color: "#06B6D4",
     rating: 5,
     quote:
       "Deploying our private blockchain with Nexora's enterprise tier was the best technical decision we made. The compliance tools and SOC 2 certification made our legal team very happy. 10/10 would recommend.",
   },
+];
+
+const partnerCompanies = [
+  { name: "OpenAI" },
+  { name: "Accenture" },
+  { name: "Kubernetes" },
+  { name: "Coinbase" },
+  { name: "Uniswap" },
+  { name: "Solana" },
 ];
 
 export default function Testimonials() {
@@ -53,12 +66,21 @@ export default function Testimonials() {
 
   useEffect(() => {
     if (!autoPlay) return;
-    const t = setInterval(() => setCurrent((c) => (c + 1) % testimonials.length), 5000);
+    const t = setInterval(
+      () => setCurrent((c) => (c + 1) % testimonials.length),
+      5000,
+    );
     return () => clearInterval(t);
   }, [autoPlay]);
 
-  const prev = () => { setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length); setAutoPlay(false); };
-  const next = () => { setCurrent((c) => (c + 1) % testimonials.length); setAutoPlay(false); };
+  const prev = () => {
+    setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
+    setAutoPlay(false);
+  };
+  const next = () => {
+    setCurrent((c) => (c + 1) % testimonials.length);
+    setAutoPlay(false);
+  };
 
   return (
     <section className="py-28 relative overflow-hidden">
@@ -70,8 +92,12 @@ export default function Testimonials() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-3 block">Testimonials</span>
-          <h2 className="text-4xl lg:text-5xl font-bold font-display text-white">What Our Users Say</h2>
+          <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-3 block">
+            Testimonials
+          </span>
+          <h2 className="text-4xl lg:text-5xl font-bold font-display text-white">
+            What Our Users Say
+          </h2>
         </motion.div>
 
         <div className="relative max-w-4xl mx-auto">
@@ -87,14 +113,23 @@ export default function Testimonials() {
             >
               {/* Quote icon */}
               <div className="absolute top-8 right-8 opacity-10">
-                <Quote className="w-16 h-16" style={{ color: testimonials[current].color }} />
+                <Quote
+                  className="w-16 h-16"
+                  style={{ color: testimonials[current].color }}
+                />
               </div>
 
               {/* Stars */}
               <div className="flex gap-1 mb-6">
-                {Array.from({ length: testimonials[current].rating }, (_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                ))}
+                {Array.from(
+                  { length: testimonials[current].rating },
+                  (_, i) => (
+                    <Star
+                      key={i}
+                      className="w-5 h-5 fill-yellow-400 text-yellow-400"
+                    />
+                  ),
+                )}
               </div>
 
               {/* Quote text */}
@@ -105,15 +140,29 @@ export default function Testimonials() {
               {/* Author */}
               <div className="flex items-center gap-4">
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-bold text-white flex-shrink-0"
-                  style={{ background: `linear-gradient(135deg, ${testimonials[current].color}, ${testimonials[current].color}80)` }}
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center overflow-hidden flex-shrink-0 shadow-lg"
+                  style={{
+                    border: `2px solid ${testimonials[current].color}50`,
+                    boxShadow: `0 0 20px ${testimonials[current].color}30`,
+                  }}
                 >
-                  {testimonials[current].avatar}
+                  <img
+                    src={testimonials[current].image}
+                    alt={`${testimonials[current].name}'s avatar`}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
-                  <div className="font-bold text-white text-base">{testimonials[current].name}</div>
-                  <div className="text-sm text-slate-400">{testimonials[current].role}</div>
-                  <div className="text-xs font-semibold" style={{ color: testimonials[current].color }}>
+                  <div className="font-bold text-white text-base">
+                    {testimonials[current].name}
+                  </div>
+                  <div className="text-sm text-slate-400">
+                    {testimonials[current].role}
+                  </div>
+                  <div
+                    className="text-xs font-semibold mt-0.5"
+                    style={{ color: testimonials[current].color }}
+                  >
                     @ {testimonials[current].company}
                   </div>
                 </div>
@@ -127,10 +176,14 @@ export default function Testimonials() {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => { setCurrent(i); setAutoPlay(false); }}
+                  onClick={() => {
+                    setCurrent(i);
+                    setAutoPlay(false);
+                  }}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     i === current ? "w-6 bg-blue-400" : "bg-white/20"
                   }`}
+                  aria-label={`Go to testimonial ${i + 1}`}
                 />
               ))}
             </div>
@@ -140,6 +193,7 @@ export default function Testimonials() {
                 whileTap={{ scale: 0.9 }}
                 onClick={prev}
                 className="w-10 h-10 rounded-xl glass border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-500/30 transition-all"
+                aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-5 h-5" />
               </motion.button>
@@ -148,6 +202,7 @@ export default function Testimonials() {
                 whileTap={{ scale: 0.9 }}
                 onClick={next}
                 className="w-10 h-10 rounded-xl glass border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-500/30 transition-all"
+                aria-label="Next testimonial"
               >
                 <ChevronRight className="w-5 h-5" />
               </motion.button>
@@ -160,11 +215,16 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-6 mt-16"
+          className="flex flex-wrap justify-center gap-4 mt-16"
         >
-          {["OpenAI", "Accenture", "Kube", "Coinbase", "UNIEX", "Solana"].map((c) => (
-            <div key={c} className="glass px-5 py-2.5 rounded-xl border border-white/[0.06] text-sm font-bold text-slate-500 hover:text-slate-300 transition-colors cursor-default">
-              {c}
+          {partnerCompanies.map((company) => (
+            <div
+              key={company.name}
+              className="bg-white/[0.02] backdrop-blur-sm px-5 py-3 rounded-xl border border-white/[0.06] flex items-center gap-2.5 group hover:bg-white/[0.05] hover:border-white/[0.15] transition-all cursor-default"
+            >
+              <span className="text-sm font-bold text-slate-500 group-hover:text-slate-300 transition-colors">
+                {company.name}
+              </span>
             </div>
           ))}
         </motion.div>

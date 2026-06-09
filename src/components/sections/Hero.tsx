@@ -1,315 +1,580 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
-  Terminal,
+  Play,
+  TrendingUp,
+  Cpu,
   Activity,
   Shield,
   Zap,
+  CheckCircle2,
+  Sparkles,
+  Stars,
+  Hexagon,
   Globe,
-  Database,
-  Lock,
+  Command,
+  BarChart3,
 } from "lucide-react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+const builders = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&h=100&q=80",
+    name: "Sarah",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&h=100&q=80",
+    name: "Alex",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&h=100&q=80",
+    name: "Maria",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&h=100&q=80",
+    name: "Liam",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=100&h=100&q=80",
+    name: "Chloe",
+  },
+];
+
+const stats = [
+  { value: "2.4M", label: "Transactions/sec", icon: Zap },
+  { value: "99.99%", label: "Uptime SLA", icon: Shield },
+  { value: "150+", label: "Ecosystem DApps", icon: Globe },
+];
 
 export default function Hero() {
-  // Simulate live futuristic data fluctuating
-  const [tps, setTps] = useState(42590);
-  const [latency, setLatency] = useState(12.4);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTps((prev) => prev + Math.floor(Math.random() * 500) - 250);
-      setLatency((prev) =>
-        Number((prev + (Math.random() * 0.4 - 0.2)).toFixed(1)),
-      );
-    }, 1500);
-    return () => clearInterval(interval);
+    setIsMounted(true);
+    AOS.init({
+      duration: 800,
+      once: false,
+      easing: "ease-out",
+    });
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      const { innerWidth, innerHeight } = window;
+
+      setMousePosition({
+        x: (clientX / innerWidth) * 2 - 1,
+        y: (clientY / innerHeight) * 2 - 1,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16 bg-[#02040A] text-white selection:bg-cyan-500/30"
+      className="relative min-h-screen flex items-center overflow-hidden bg-[#0A0A0F]"
     >
-      {/* --- Ambient Background Systems --- */}
-      {/* Hex/Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-0" />
-
-      {/* Scanning Laser Line */}
-      <motion.div
-        animate={{ y: ["-100vh", "100vh"] }}
-        transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
-        className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent shadow-[0_0_15px_rgba(0,243,255,0.3)] z-0 pointer-events-none"
+      {/* Custom Cursor Follower - CSS Only */}
+      <div
+        className="fixed w-64 h-64 rounded-full pointer-events-none z-0 mix-blend-screen cursor-follower"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)",
+        }}
       />
 
-      {/* Massive Glowing Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[150px] pointer-events-none z-0" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-violet-600/15 rounded-full blur-[150px] pointer-events-none z-0" />
+      {/* Animated Particle Field - Pure CSS */}
+      {isMounted && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-px h-px bg-gradient-to-b from-blue-400 to-violet-600 rounded-full particle"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${2 + Math.random() * 3}s`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid lg:grid-cols-12 gap-16 items-center min-h-[80vh]">
-          {/* --- Left Column: Core Pitch --- */}
-          <div className="lg:col-span-6 flex flex-col justify-center text-left space-y-8">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
+
+
+      {/* Ambient Light Orbs */}
+      <div
+        className="absolute top-20 left-1/4 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none z-0 orb-1"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.05) 50%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute bottom-20 right-1/4 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none z-0 orb-2"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(6,182,212,0.1) 0%, rgba(59,130,246,0.05) 50%, transparent 70%)",
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-24 pb-16">
+        <div className="grid lg:grid-cols-12 gap-12 items-center min-h-[80vh]">
+          {/* Left Column - Core Pitch */}
+          <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center space-y-8">
+            <div
               className="space-y-6"
+              data-aos="fade-up"
+              data-aos-duration="800"
             >
-              {/* Sci-Fi Status Badge */}
-              <motion.div 
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center gap-3 px-2 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 backdrop-blur-md shadow-[0_0_15px_rgba(0,243,255,0.2)]"
-              >
-                <span className="flex h-2.5 w-2.5 ml-1 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400 shadow-[0_0_8px_rgba(0,243,255,0.8)]"></span>
+              {/* Animated Neon Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/5 backdrop-blur-xl relative overflow-hidden group cursor-default neon-badge">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 shimmer" />
+                <Stars className="w-4 h-4 text-cyan-400" />
+                <span className="text-xs font-medium tracking-wider text-cyan-300 uppercase">
+                  Next-Gen Infrastructure
                 </span>
-                <span className="text-[11px] font-mono font-bold uppercase tracking-[0.25em] text-cyan-300 pr-3">
-                  NEXORA // AI-CORE ACTIVE
-                </span>
-              </motion.div>
+                <Sparkles className="w-3 h-3 text-cyan-400 animate-pulse" />
+              </div>
 
-              {/* Bold Futuristic Headline */}
-              <h1 className="text-5xl sm:text-6xl xl:text-7xl font-bold font-display leading-[1.05] tracking-tight">
-                Architecting the <br />
-                <span className="relative inline-block mt-2">
-                  <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(0,243,255,0.3)]">
-                    Web3 Frontier
-                  </span>
+              {/* Dynamic Headline with Gradient Animation */}
+              <h1 className="text-5xl sm:text-6xl xl:text-7xl font-bold leading-[1.08] tracking-tight">
+                <span className="text-white">Building the</span>
+                <br />
+                <span className="relative inline-block bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent bg-[length:200%_auto] gradient-shift">
+                  Decentralized
                 </span>
+                <br />
+                <span className="text-white">Future</span>
               </h1>
 
-              {/* Technical Description */}
-              <p className="text-lg text-slate-400 max-w-xl leading-relaxed font-light">
-                An enterprise-grade, AI-driven infrastructure matrix engineered
-                to build, scale, and secure next-generation decentralized
-                ecosystems.
+              {/* Description */}
+              <p className="text-lg text-slate-400/90 max-w-xl leading-relaxed font-light">
+                Experience infrastructure that anticipates your needs.
+                <span className="text-white/70 font-normal">
+                  {" "}
+                  AI-optimized routing
+                </span>
+                ,
+                <span className="text-cyan-400/80 font-normal">
+                  {" "}
+                  zero-trust security
+                </span>
+                , and
+                <span className="text-violet-400/80 font-normal">
+                  {" "}
+                  quantum-ready protocols
+                </span>
+                — all engineered for the next generation of the internet.
               </p>
-            </motion.div>
-
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="flex flex-wrap gap-5 items-center"
-            >
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative flex items-center gap-3 px-8 py-4 bg-transparent overflow-hidden border border-cyan-500/30 hover:border-cyan-400 transition-colors"
-              >
-                {/* Button background hover effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-
-                <span className="relative text-sm font-mono tracking-widest uppercase text-cyan-50">
-                  Initialize_
-                </span>
-                <ArrowRight className="relative w-4 h-4 text-cyan-400 group-hover:translate-x-1 transition-transform" />
-
-                {/* Sci-fi corner cuts */}
-                <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-400" />
-                <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-400" />
-              </motion.button>
-
-              <motion.button
-                whileHover={{ opacity: 1 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-3 px-6 py-4 opacity-70 transition-opacity"
-              >
-                <div className="w-8 h-8 rounded-full border border-slate-500 flex items-center justify-center">
-                  <Terminal className="w-3.5 h-3.5 text-slate-300" />
-                </div>
-                <span className="text-sm font-mono tracking-wider uppercase text-slate-300">
-                  View Docs
-                </span>
-              </motion.button>
-            </motion.div>
-          </div>
-
-          {/* --- Right Column: Futuristic Data Core HUD --- */}
-          <div className="lg:col-span-6 relative hidden lg:flex justify-center items-center h-[600px] w-full">
-            {/* Center Core Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-cyan-500/20 rounded-full blur-[40px] animate-pulse" />
-
-            {/* Rotating SVG Rings (Pure 2D) */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <motion.svg
-                animate={{ rotate: 360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[450px] h-[450px] opacity-30"
-                viewBox="0 0 100 100"
-              >
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="48"
-                  fill="none"
-                  stroke="#00f3ff"
-                  strokeWidth="0.2"
-                  strokeDasharray="4 2 1 2"
-                />
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="42"
-                  fill="none"
-                  stroke="#b026ff"
-                  strokeWidth="0.1"
-                  strokeDasharray="10 5"
-                />
-              </motion.svg>
-
-              <motion.svg
-                animate={{ rotate: -360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[350px] h-[350px] opacity-40"
-                viewBox="0 0 100 100"
-              >
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="48"
-                  fill="none"
-                  stroke="#0066ff"
-                  strokeWidth="0.3"
-                  strokeDasharray="2 8"
-                />
-                <path
-                  d="M 50 2 L 50 8 M 50 98 L 50 92 M 2 50 L 8 50 M 98 50 L 92 50"
-                  stroke="#00f3ff"
-                  strokeWidth="0.5"
-                />
-              </motion.svg>
             </div>
 
-            {/* Central HUD Data Node */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: "backOut" }}
-              className="relative z-20 w-56 h-56 rounded-full border border-cyan-500/30 bg-[#02040A]/80 backdrop-blur-xl flex flex-col items-center justify-center shadow-[0_0_50px_rgba(0,243,255,0.1)]"
+            {/* Enhanced CTA Section */}
+            <div
+              className="flex flex-wrap gap-4 items-center"
+              data-aos="fade-up"
+              data-aos-delay="300"
+              data-aos-duration="600"
             >
-              {/* Inner crosshair */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                <div className="w-full h-[1px] bg-cyan-400" />
-                <div className="absolute h-full w-[1px] bg-cyan-400" />
-              </div>
+              {/* Primary CTA - Glassmorphism Button */}
+              <button className="group relative flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-white overflow-hidden cta-primary hover:scale-105 active:scale-95 transition-transform">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-violet-500 gradient-rotate" />
+                <div className="absolute inset-[1px] bg-[#0A0A0F] rounded-2xl" />
+                <span className="relative flex items-center gap-2">
+                  Initialize Node
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform relative" />
+                </span>
+              </button>
 
-              <Globe className="w-8 h-8 text-cyan-400 mb-2 opacity-80" />
-              <div className="text-2xl font-mono font-bold text-white tracking-widest">
-                {tps.toLocaleString()}
-              </div>
-              <div className="text-[9px] font-mono text-cyan-500 tracking-[0.2em] uppercase mt-1">
-                Global TPS
-              </div>
-            </motion.div>
-
-            {/* Floating Panel 1: Security Shield */}
-            <motion.div
-              animate={{ y: [-10, 10, -10] }}
-              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="absolute top-[15%] left-[5%] z-30 w-48 bg-gradient-to-b from-white/[0.05] to-transparent border border-white/10 backdrop-blur-xl p-4"
-              style={{
-                clipPath:
-                  "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)",
-              }} // Futuristic angled cut
-            >
-              <div className="flex items-center gap-3 border-b border-white/[0.05] pb-3 mb-3">
-                <div className="w-8 h-8 rounded-none border border-emerald-500/40 bg-emerald-500/10 flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-emerald-400" />
+              {/* Secondary CTA - Neon Border */}
+              <button className="group flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-slate-300 border border-slate-700/50 bg-slate-800/10 backdrop-blur-xl hover:border-indigo-500/50 hover:bg-indigo-500/5 transition-all duration-300 hover:scale-105 active:scale-95">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500/20 to-violet-500/20 border border-blue-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Command className="w-4 h-4 text-blue-400" />
                 </div>
-                <div>
-                  <div className="text-[8px] font-mono text-slate-500 tracking-widest uppercase">
-                    Protocol Status
+                View Documentation
+              </button>
+            </div>
+
+            {/* Stats Grid */}
+            <div
+              className="grid grid-cols-3 gap-4 pt-8 border-t border-slate-800/50"
+              data-aos="fade-up"
+              data-aos-delay="600"
+              data-aos-duration="800"
+            >
+              {stats.map((stat, i) => (
+                <div
+                  key={stat.value}
+                  className="relative group cursor-default hover:scale-105 transition-transform duration-300"
+                  style={{ animationDelay: `${0.8 + i * 0.1}s` }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-violet-500/5 rounded-xl blur-xl group-hover:blur-2xl transition-all" />
+                  <div className="relative p-4 rounded-xl bg-slate-900/50 border border-slate-800/50 backdrop-blur-sm">
+                    <stat.icon className="w-5 h-5 text-blue-400 mb-2" />
+                    <div className="text-2xl font-bold text-white font-mono">
+                      {stat.value}
+                    </div>
+                    <div className="text-xs text-slate-500 mt-1">
+                      {stat.label}
+                    </div>
                   </div>
-                  <div className="text-xs font-bold text-emerald-400 font-mono">
-                    SECURED
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column - Futuristic Dashboard */}
+          <div className="lg:col-span-6 xl:col-span-5 relative hidden lg:flex justify-center items-center">
+            {/* Holographic Dashboard Container */}
+            <div
+              className="relative w-full max-w-[460px] dashboard-container"
+              data-aos="fade-left"
+              data-aos-duration="1000"
+            >
+              {/* Floating Glow Effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-violet-500/20 rounded-3xl blur-2xl glow-pulse" />
+
+              {/* Main Dashboard Card */}
+              <div className="relative bg-gradient-to-br from-slate-900/80 to-slate-800/80 border border-slate-700/50 backdrop-blur-2xl rounded-3xl overflow-hidden shadow-2xl shadow-blue-500/10">
+                {/* Dashboard Header */}
+                <div className="px-6 py-4 border-b border-slate-700/50 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                      <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                      <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                    </div>
+                    <div className="h-4 w-px bg-slate-700/50" />
+                    <div className="flex items-center gap-2">
+                      <Hexagon className="w-4 h-4 text-cyan-400" />
+                      <span className="text-xs font-mono text-slate-400">
+                        nexus-core-v3.0
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                    <span className="text-[10px] text-green-400 font-mono uppercase tracking-wider">
+                      Live
+                    </span>
+                  </div>
+                </div>
+
+                {/* Dashboard Content */}
+                <div className="p-6 space-y-6">
+                  {/* Network Health Visualization */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+                        Network Health
+                      </span>
+                      <span className="text-xs font-mono text-green-400">
+                        98.7%
+                      </span>
+                    </div>
+                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-cyan-400 via-blue-400 to-violet-400 rounded-full progress-bar"
+                        style={{ width: "98.7%" }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Real-time Metrics Grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      {
+                        icon: Activity,
+                        label: "Throughput",
+                        value: "42.5K TPS",
+                        change: "+12.3%",
+                      },
+                      {
+                        icon: BarChart3,
+                        label: "Gas Fee",
+                        value: "0.0012 ETH",
+                        change: "-5.2%",
+                      },
+                    ].map((metric, i) => (
+                      <div
+                        key={metric.label}
+                        className="p-4 rounded-xl bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm group hover:border-blue-500/30 transition-all hover:scale-105 duration-300"
+                        style={{ animationDelay: `${0.5 + i * 0.1}s` }}
+                      >
+                        <metric.icon className="w-4 h-4 text-blue-400 mb-2" />
+                        <div className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">
+                          {metric.label}
+                        </div>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-lg font-bold text-white font-mono">
+                            {metric.value}
+                          </span>
+                          <span
+                            className={`text-xs font-medium ${
+                              metric.change.startsWith("+")
+                                ? "text-green-400"
+                                : "text-red-400"
+                            }`}
+                          >
+                            {metric.change}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Live Node Status */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+                        Active Nodes
+                      </span>
+                      <span className="text-xs font-mono text-slate-500">
+                        128/128
+                      </span>
+                    </div>
+                    <div className="space-y-2">
+                      {[
+                        { region: "US-East", latency: "4ms", peers: 23 },
+                        { region: "EU-West", latency: "8ms", peers: 18 },
+                        { region: "APAC", latency: "12ms", peers: 15 },
+                      ].map((node, i) => (
+                        <div
+                          key={node.region}
+                          className="flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/30 hover:border-blue-500/20 transition-all hover:translate-x-1 cursor-pointer"
+                          style={{ animationDelay: `${0.7 + i * 0.1}s` }}
+                        >
+                          <div className="flex items-center gap-3">
+                            <Cpu className="w-4 h-4 text-slate-500" />
+                            <span className="text-sm text-slate-300 font-mono">
+                              {node.region}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <span className="text-xs text-slate-500 font-mono">
+                              {node.latency}
+                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <CheckCircle2 className="w-3 h-3 text-green-400" />
+                              <span className="text-[10px] text-green-400 font-medium">
+                                {node.peers} peers
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="flex justify-between items-end">
-                <div className="text-[10px] font-mono text-slate-400">
-                  Threat blocks
-                </div>
-                <div className="text-sm font-mono text-white">12.4M</div>
-              </div>
-            </motion.div>
 
-            {/* Floating Panel 2: Latency Monitor */}
-            <motion.div
-              animate={{ y: [10, -10, 10] }}
-              transition={{
-                repeat: Infinity,
-                duration: 7,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-              className="absolute bottom-[15%] right-[0%] z-30 w-52 bg-[#02040A]/60 border-l-2 border-violet-500 backdrop-blur-xl p-4 shadow-2xl"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-violet-400" />
-                  <span className="text-[10px] font-mono text-violet-300 tracking-widest uppercase">
-                    Latency
+              {/* Floating Mini Cards */}
+              <div className="absolute -top-8 -right-8 bg-gradient-to-br from-slate-900/90 to-slate-800/90 border border-cyan-500/30 backdrop-blur-xl rounded-2xl p-4 shadow-2xl shadow-cyan-500/20 floating-card-1">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-cyan-400" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] text-cyan-400 font-medium">
+                      Smart Contract
+                    </div>
+                    <div className="text-sm font-bold text-white font-mono">
+                      0x7F...4A21
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-2 flex items-center gap-1">
+                  <span className="text-[10px] text-green-400">
+                    Deployed 2s ago
                   </span>
                 </div>
-                <span className="text-xs font-mono font-bold text-white">
-                  {latency.toFixed(1)}ms
-                </span>
               </div>
 
-              {/* Live sparkline simulation */}
-              <div className="flex items-end gap-1 h-8">
-                {Array.from({ length: 12 }).map((_, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{
-                      height: ["20%", `${Math.random() * 80 + 20}%`, "20%"],
-                    }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: Math.random() * 2 + 1,
-                      ease: "easeInOut",
-                    }}
-                    className="flex-1 bg-violet-500/50 rounded-t-sm"
-                  />
-                ))}
+              <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-slate-900/90 to-slate-800/90 border border-violet-500/30 backdrop-blur-xl rounded-2xl p-3 shadow-2xl shadow-violet-500/20 floating-card-2">
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <div className="w-3 h-3 rounded-full bg-violet-400" />
+                    <div className="absolute inset-0 w-3 h-3 rounded-full bg-violet-400 animate-ping" />
+                  </div>
+                  <span className="text-xs font-medium text-violet-200">
+                    AI Optimizing Routes
+                  </span>
+                </div>
               </div>
-            </motion.div>
-
-            {/* Floating Panel 3: Active Nodes */}
-            <motion.div
-              animate={{ x: [5, -5, 5] }}
-              transition={{
-                repeat: Infinity,
-                duration: 8,
-                ease: "easeInOut",
-                delay: 2,
-              }}
-              className="absolute top-[60%] left-[-5%] z-30 w-40 bg-[#02040A]/80 border border-white/5 backdrop-blur-md p-3"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <Database className="w-3.5 h-3.5 text-blue-400" />
-                <span className="text-[9px] font-mono text-slate-400 tracking-widest uppercase">
-                  Active Nodes
-                </span>
-              </div>
-              <div className="text-lg font-mono font-bold text-white mb-2">
-                1,042
-              </div>
-              {/* Mini progress bar */}
-              <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                <div className="w-[85%] h-full bg-blue-500" />
-              </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Modern Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+        <div className="w-6 h-10 rounded-full border-2 border-slate-600/50 flex items-start justify-center p-1.5 scroll-indicator">
+          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 scroll-dot" />
+        </div>
+        <span className="text-[9px] text-slate-600 tracking-[0.2em] uppercase font-medium">
+          Explore Features
+        </span>
+      </div>
+
+      <style jsx>{`
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+
+        @keyframes gradient-shift {
+          0% {
+            background-position: 0% 50%;
+          }
+          100% {
+            background-position: 200% 50%;
+          }
+        }
+
+        @keyframes gradient-rotate {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes float-1 {
+          0%,
+          100% {
+            transform: translateY(-10px) rotate(-2deg);
+          }
+          50% {
+            transform: translateY(10px) rotate(2deg);
+          }
+        }
+
+        @keyframes float-2 {
+          0%,
+          100% {
+            transform: translateY(10px) rotate(2deg);
+          }
+          50% {
+            transform: translateY(-10px) rotate(-2deg);
+          }
+        }
+
+        @keyframes pulse-glow {
+          0%,
+          100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1.02);
+          }
+        }
+
+        @keyframes scroll-bounce {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(8px);
+          }
+        }
+
+        @keyframes particle-float {
+          0% {
+            opacity: 0.1;
+            transform: translateY(0) scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: translateY(-20px) scale(1.5);
+          }
+          100% {
+            opacity: 0.1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .shimmer {
+          animation: shimmer 2s linear infinite;
+        }
+
+        .gradient-shift {
+          animation: gradient-shift 8s linear infinite;
+        }
+
+        .gradient-rotate {
+          animation: gradient-rotate 10s linear infinite;
+        }
+
+        .floating-card-1 {
+          animation: float-1 4s ease-in-out infinite;
+        }
+
+        .floating-card-2 {
+          animation: float-2 5s ease-in-out infinite 1s;
+        }
+
+        .glow-pulse {
+          animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        .scroll-indicator {
+          animation: scroll-bounce 1.5s ease-in-out infinite;
+        }
+
+        .scroll-dot {
+          animation: scroll-bounce 1.5s ease-in-out infinite;
+        }
+
+        .particle {
+          animation: particle-float infinite ease-in-out;
+        }
+
+        .progress-bar {
+          animation: slide-in 1.5s ease-out;
+        }
+
+        @keyframes slide-in {
+          from {
+            transform: translateX(-100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+
+        .cursor-follower {
+          transition: all 0.1s ease-out;
+          transform: translate(var(--mouse-x, 0), var(--mouse-y, 0));
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

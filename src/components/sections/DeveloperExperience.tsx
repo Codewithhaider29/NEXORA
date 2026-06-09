@@ -105,12 +105,12 @@ function CodeBlock({ code, lang }: { code: string; lang: string }) {
     <div className="relative">
       <button
         onClick={copy}
-        className="absolute top-4 right-4 z-10 p-2 glass rounded-lg border border-white/10 hover:border-blue-500/30 transition-all"
+        className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 p-1.5 sm:p-2 glass rounded-lg border border-white/10 hover:border-blue-500/30 transition-all"
         title="Copy code"
       >
         {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
       </button>
-      <div className="bg-[rgba(0,0,0,0.5)] rounded-xl p-5 font-mono overflow-x-auto max-h-72 overflow-y-auto">
+      <div className="bg-[rgba(0,0,0,0.5)] rounded-xl p-3 sm:p-5 font-mono overflow-x-auto max-h-72 overflow-y-auto custom-scrollbar">
         {highlighted}
       </div>
     </div>
@@ -129,22 +129,22 @@ export default function DeveloperExperience() {
   const [activeSdk, setActiveSdk] = useState("react");
 
   return (
-    <section className="py-28 relative overflow-hidden">
+    <section className="py-16 lg:py-28 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-violet-950/10 via-transparent to-blue-950/10" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Left info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            className="space-y-5 sm:space-y-6"
           >
             <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest">Developer Experience</span>
-            <h2 className="text-4xl lg:text-5xl font-bold font-display text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-white">
               Built for Builders
             </h2>
-            <p className="text-slate-400 leading-relaxed">
+            <p className="text-slate-400 leading-relaxed text-sm sm:text-base">
               Get from zero to production in minutes with our developer-first tooling, comprehensive SDKs, and battle-tested APIs.
             </p>
             <ul className="space-y-3">
@@ -181,19 +181,19 @@ export default function DeveloperExperience() {
             className="glass-card overflow-hidden"
           >
             {/* Editor header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-black/30 border-b border-white/[0.06]">
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500/70" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-                <div className="w-3 h-3 rounded-full bg-green-500/70" />
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 px-3 sm:px-4 py-3 bg-black/30 border-b border-white/[0.06]">
+              <div className="flex items-center gap-1.5 pl-1 sm:pl-0">
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/70" />
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/70" />
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/70" />
               </div>
               {/* SDK Tabs */}
-              <div className="flex items-center gap-1 bg-white/[0.03] rounded-lg p-1">
+              <div className="flex items-center gap-1 bg-white/[0.03] rounded-lg p-1 overflow-x-auto w-full sm:w-auto custom-scrollbar">
                 {sdks.map((sdk) => (
                   <button
                     key={sdk.id}
                     onClick={() => setActiveSdk(sdk.id)}
-                    className={`px-3 py-1 rounded-md text-xs font-medium transition-all duration-200 ${
+                    className={`flex-shrink-0 px-3 py-1.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium transition-all duration-200 ${
                       activeSdk === sdk.id
                         ? "bg-white/10 text-white"
                         : "text-slate-500 hover:text-slate-300"
@@ -222,15 +222,15 @@ export default function DeveloperExperience() {
             </div>
 
             {/* Quick stats */}
-            <div className="flex gap-4 px-4 pb-4">
+            <div className="flex gap-2 sm:gap-4 px-3 sm:px-4 pb-3 sm:pb-4 overflow-x-auto custom-scrollbar">
               {[
                 { label: "npm downloads/mo", value: "1.2M+" },
                 { label: "GitHub Stars", value: "12.4K" },
                 { label: "Uptime SLA", value: "99.99%" },
               ].map((s) => (
-                <div key={s.label} className="flex-1 bg-white/[0.03] rounded-lg p-2.5 text-center">
-                  <div className="text-sm font-bold text-white">{s.value}</div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">{s.label}</div>
+                <div key={s.label} className="flex-1 min-w-[100px] sm:min-w-0 bg-white/[0.03] rounded-lg p-2 sm:p-2.5 text-center">
+                  <div className="text-xs sm:text-sm font-bold text-white">{s.value}</div>
+                  <div className="text-[9px] sm:text-[10px] text-slate-500 mt-0.5">{s.label}</div>
                 </div>
               ))}
             </div>
